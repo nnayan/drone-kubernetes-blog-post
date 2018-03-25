@@ -1,0 +1,21 @@
+pipeline:
+  build:
+    image: gradle:4.5.1-jdk9
+    commands: gradle --help
+  docker:
+    image: plugins/docker
+    secrets: [ docker_username, docker_password ]
+    repo: komljen/test-image
+    tags: ${DRONE_COMMIT_SHA}
+  kubectl:
+    image: komljen/drone-kubectl-helm
+    secrets: [ kubernetes_server, kubernetes_cert, kubernetes_token ]
+    kubectl: "get pods"
+  helm:
+    image: komljen/drone-kubectl-helm
+    secrets: [ kubernetes_server, kubernetes_cert, kubernetes_token ]
+    helm: list
+  notify:
+    image: plugins/slack
+    channel: drone-notification
+    secrets: [ slack_webhook ]
