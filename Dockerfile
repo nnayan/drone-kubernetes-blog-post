@@ -1,3 +1,3 @@
 FROM alpine
 
-ENV VERSION="v1.0.0"
+ENV VERSION="v1.0.1"
